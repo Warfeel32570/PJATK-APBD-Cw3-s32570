@@ -1,4 +1,5 @@
 using LinqConsoleLab.PL.Data;
+using LinqConsoleLab.PL.Models;
 
 namespace LinqConsoleLab.PL.Exercises;
 
@@ -16,7 +17,9 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie01_StudenciZWarszawy()
     {
-        throw Niezaimplementowano(nameof(Zadanie01_StudenciZWarszawy));
+        return DaneUczelni.Studenci
+            .Where(s => s.Miasto == "Warsaw")
+            .Select(s => $"{s.NumerIndeksu} | {s.Imie} {s.Nazwisko} | {s.Miasto}");
     }
 
     /// <summary>
@@ -30,7 +33,7 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie02_AdresyEmailStudentow()
     {
-        throw Niezaimplementowano(nameof(Zadanie02_AdresyEmailStudentow));
+        return DaneUczelni.Studenci.Select(s => s.Email);
     }
 
     /// <summary>
@@ -45,7 +48,10 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie03_StudenciPosortowani()
     {
-        throw Niezaimplementowano(nameof(Zadanie03_StudenciPosortowani));
+        return DaneUczelni.Studenci
+            .OrderBy(s => s.Nazwisko)
+            .ThenBy(s => s.Imie)
+            .Select(s => $"{s.NumerIndeksu} | {s.Imie} | {s.Nazwisko}");
     }
 
     /// <summary>
@@ -60,7 +66,11 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie04_PierwszyPrzedmiotAnalityczny()
     {
-        throw Niezaimplementowano(nameof(Zadanie04_PierwszyPrzedmiotAnalityczny));
+        var item = DaneUczelni.Przedmioty
+            .FirstOrDefault(k => k.Kategoria == "Analytics");
+
+        return item is null
+            ? ["Brak przedmiotu z kategorii."] : [$"{item.Nazwa} | start: {item.DataStartu:yyyy-MM-dd}"];
     }
 
     /// <summary>
@@ -77,7 +87,8 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie05_CzyIstniejeNieaktywneZapisanie()
     {
-        throw Niezaimplementowano(nameof(Zadanie05_CzyIstniejeNieaktywneZapisanie));
+        var exists = DaneUczelni.Zapisy.Any(z => !z.CzyAktywny);
+        return [$"Czy istnieje nieaktywny zapis: {(exists ? "Tak" : "Nie")}"];
     }
 
     /// <summary>
@@ -92,7 +103,10 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie06_CzyWszyscyProwadzacyMajaKatedre()
     {
-        throw Niezaimplementowano(nameof(Zadanie06_CzyWszyscyProwadzacyMajaKatedre));
+        var wszyscyMajaKatedre = DaneUczelni.Prowadzacy
+            .All(p => !string.IsNullOrWhiteSpace(p.Katedra));
+
+        return [$"Czy wszyscy prowadzący mają katedrę: {(wszyscyMajaKatedre ? "Tak" : "Nie")}"];
     }
 
     /// <summary>
@@ -106,7 +120,8 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie07_LiczbaAktywnychZapisow()
     {
-        throw Niezaimplementowano(nameof(Zadanie07_LiczbaAktywnychZapisow));
+        var num = DaneUczelni.Zapisy.Count(z => z.CzyAktywny);
+        return [$"Liczba aktywnych zapisów: {num}"];
     }
 
     /// <summary>
