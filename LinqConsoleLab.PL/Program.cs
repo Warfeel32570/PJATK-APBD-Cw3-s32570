@@ -3,6 +3,7 @@ using LinqConsoleLab.PL.Data;
 using LinqConsoleLab.PL.Exercises;
 
 Console.OutputEncoding = Encoding.UTF8;
+Console.WriteLine($"sdhkgvuishghk");
 DaneUczelni.Inicjalizuj();
 
 var zadania = new ZadaniaLinq();
